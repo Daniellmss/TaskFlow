@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow</title>
+</head>
+<body>
+    <h1>Editar Tarefa</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="text" name="nome" value="{{tarefa.nome}}">
+        <textarea name="descricao">{{tarefa.descricao}}</textarea>
+        <select name="prioridade">
+            <option value="1" {% if tarefa.prioridade == 1 %} selected {% endif %}>Baixa</option>
+            <option value="2" {% if tarefa.prioridade == 2 %} selected {% endif %}>Média</option>
+            <option value="3" {% if tarefa.prioridade == 3 %} selected {% endif %}>Alta</option>
+        </select>
+        <button type="submit">Salvar alterações</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow</title>
+</head>
+<body>
+    <h1>Bem-vindo ao TaskFlow</h1>
+    {% if  mensagem%}
+        <p>{{mensagem}}</p>
+    {% else %}
+        <p>Isso é um gerenciador de tarefas</p>
+    {% endif %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="text" name="nome">
+        <textarea name="descricao" placeholder="Escreva sua descrição aqui..."></textarea>
+        <select name="prioridade">
+            <option value="1" selected>Baixa</option>
+            <option value="2">Média</option>
+            <option value="3">Alta</option>
+        </select>
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li {% if message.tags %} class="{{message.tags}}" {% endif %}>
+                    {{message}}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+
+    <ul>
+        {% for tarefa in tarefas %}
+            <li>
+                Nome: {{tarefa.nome}} | Descrição: {{tarefa.descricao}} | Prioridade: {{tarefa.get_prioridade_display}} | Concluida: 
+                {% if tarefa.concluida %}
+                    Concluida
+                    <form action="{% url 'concluir_tarefa' tarefa.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit">Reabrir tarefa</button>
+                    </form>
+                {% else %}
+                    Pendente
+                    <form action="{% url 'concluir_tarefa' tarefa.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit">Concluir Tarefa</button>
+                    </form>
+                {% endif %}
+                <form action="{% url 'editar_tarefa' tarefa.id %}" method="GET">
+                    <button type="submit">Editar Tarefa</button>
+                </form>
+                <form action="{% url 'excluir_tarefa' tarefa.id %}" method="POST" onsubmit="return confirm('Tem certeza?');">
+                    {% csrf_token %}
+                    <button type="submit">Excluir Tarefa</button>
+                </form>
+            </li>
+        {% empty %}
+            <li>Nenhuma tarefa encontrada!</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
