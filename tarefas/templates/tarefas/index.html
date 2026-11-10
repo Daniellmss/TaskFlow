@@ -1,69 +1,91 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TaskFlow</title>
+    <link rel="stylesheet" href="{% static 'tarefas/css/style.css' %}">
 </head>
 <body>
-    <h1>Bem-vindo ao TaskFlow</h1>
-    {% if  mensagem%}
-        <p>{{mensagem}}</p>
-    {% else %}
-        <p>Isso é um gerenciador de tarefas</p>
-    {% endif %}
+    <main class="container">
+        <header class="page-header">
+            <h1>Bem-vindo ao TaskFlow</h1>
+            {% if  mensagem%}
+                <p>{{mensagem}}</p>
+            {% else %}
+                <p>Isso é um gerenciador de tarefas</p>
+            {% endif %}
+        </header>
+    
+        <section class="task-form">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="text" name="nome" placeholder="Digite o nome da tarefa aqui...">
+                <textarea name="descricao" placeholder="Escreva sua descrição aqui..."></textarea>
+                <select name="prioridade">
+                    <option value="1" selected>Baixa</option>
+                    <option value="2">Média</option>
+                    <option value="3">Alta</option>
+                </select>
+                <button type="submit">Cadastrar</button>
+            </form>
+        </section>
+        
+        <div class="messages">
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li {% if message.tags %} class="{{message.tags}}" {% endif %}>
+                            {{message}}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    
+        <section class="task-list">
+            <ul>
+                {% for tarefa in tarefas %}
+                    <li>
+                        <div class="task-item">
+                            <h3>Nome: {{tarefa.nome}}</h3>
+                            <p>Descrição: {{tarefa.descricao}}</p>
+                            <p>Prioridade: {{tarefa.get_prioridade_display}}</p>
+                            <p>Concluida:</p>
+                            {% if tarefa.concluida %}
+                                <p>Concluida</p>                             
+                            {% else %}
+                                <p>Pendente</p>
+                            {% endif %}
 
-    <form action="" method="POST">
-        {% csrf_token %}
-        <input type="text" name="nome">
-        <textarea name="descricao" placeholder="Escreva sua descrição aqui..."></textarea>
-        <select name="prioridade">
-            <option value="1" selected>Baixa</option>
-            <option value="2">Média</option>
-            <option value="3">Alta</option>
-        </select>
-        <button type="submit">Cadastrar</button>
-    </form>
-
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li {% if message.tags %} class="{{message.tags}}" {% endif %}>
-                    {{message}}
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-
-
-    <ul>
-        {% for tarefa in tarefas %}
-            <li>
-                Nome: {{tarefa.nome}} | Descrição: {{tarefa.descricao}} | Prioridade: {{tarefa.get_prioridade_display}} | Concluida: 
-                {% if tarefa.concluida %}
-                    Concluida
-                    <form action="{% url 'concluir_tarefa' tarefa.id %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit">Reabrir tarefa</button>
-                    </form>
-                {% else %}
-                    Pendente
-                    <form action="{% url 'concluir_tarefa' tarefa.id %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit">Concluir Tarefa</button>
-                    </form>
-                {% endif %}
-                <form action="{% url 'editar_tarefa' tarefa.id %}" method="GET">
-                    <button type="submit">Editar Tarefa</button>
-                </form>
-                <form action="{% url 'excluir_tarefa' tarefa.id %}" method="POST" onsubmit="return confirm('Tem certeza?');">
-                    {% csrf_token %}
-                    <button type="submit">Excluir Tarefa</button>
-                </form>
-            </li>
-        {% empty %}
-            <li>Nenhuma tarefa encontrada!</li>
-        {% endfor %}
-    </ul>
+                            <div class="task-actions">
+                                {% if tarefa.concluida %}
+                                    <form action="{% url 'concluir_tarefa' tarefa.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn-concluir">Reabrir tarefa</button>
+                                    </form>
+                                {% else %}
+                                    <form action="{% url 'concluir_tarefa' tarefa.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn-concluir">Concluir Tarefa</button>
+                                    </form>
+                                {% endif %}
+                                <form action="{% url 'editar_tarefa' tarefa.id %}" method="GET">
+                                    <button type="submit" class="btn-editar">Editar Tarefa</button>
+                                </form>
+                                <form action="{% url 'excluir_tarefa' tarefa.id %}" method="POST" onsubmit="return confirm('Tem certeza?');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-excluir">Excluir Tarefa</button>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                {% empty %}
+                    <li>Nenhuma tarefa encontrada!</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
 </body>
 </html>

@@ -1,0 +1,152 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: black;
+    margin: 0;
+    color: white;
+}
+
+main.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.page-header h1 {
+    color: greenyellow;
+    font-size: 48px;
+}
+
+.page-header p {
+    font-size: 24px;
+    color: white;
+}
+
+.task-form {
+    background-color: rgb(36, 35, 35);
+    padding: 20px;
+    border-radius: 6px;
+    max-width: 800px;
+    margin: auto;
+}
+
+.task-form input, .task-form textarea {
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(71, 71, 71);
+    color: white;
+    border-radius: 6px;
+    border: 1px solid black;
+}
+
+.task-form select {
+    text-align: center;
+    font-size: 16px;
+    width: 100%;
+    padding: 7px;
+    background-color: black;
+    color: greenyellow;
+    border-radius: 6px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    border: 1px solid greenyellow;
+}
+.task-form button {
+    font-size: 18px;
+    width: 100%;
+    padding: 10px;
+    background-color: greenyellow;
+    color: black;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid black;
+}
+
+.task-form button:hover{
+    background-color: black;
+    color: greenyellow;
+    border: 1px solid greenyellow;
+}
+
+.task-list ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 80px;
+}
+
+.task-item {
+    background-color: rgb(71, 71, 71);
+    padding: 20px;
+    margin: auto;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    max-width: 1000px;
+}
+
+.task-item h3 {
+    margin: 0;
+    font-size: 32px;
+    color: greenyellow;
+}
+
+.task-item p {
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.task-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.task-actions button {
+    padding: 8px;
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.btn-concluir {
+    background-color: black;
+    color: greenyellow; 
+    border: 1px solid greenyellow;
+}
+
+.btn-concluir:hover {
+    background-color: greenyellow;
+    color: black; 
+    border: 1px solid black;
+}
+
+.btn-editar {
+    background-color: rgb(0, 132, 255);
+    color: white;
+    border: 1px solid white;   
+}
+
+.btn-editar:hover {
+    background-color: rgb(0, 94, 182);
+    border: 1px solid black;
+}
+
+
+.btn-excluir {
+    background-color: red;
+    color: white;    
+    border: 1px solid white;  
+}
+
+.btn-excluir:hover {
+    background-color: rgb(170, 0, 0);
+    border: 1px solid black;
+}
